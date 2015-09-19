@@ -136,8 +136,11 @@
  
  */
 
+
 -(void)addTheValue:(GoodsInfoModel *)goodsModel
 {
+    
+
     _goodsImgV.image = [UIImage imageNamed:goodsModel.imageName];
     _goodsTitleLab.text = goodsModel.goodsTitle;
     _priceLab.text = goodsModel.goodsPrice;
@@ -192,14 +195,13 @@
     NSLog(@"00000000");
     
     
-    [[NSNotificationCenter defaultCenter]postNotificationName:LIKE_GOOD_NOTIFICATION object:nil userInfo:@{@"position" :[NSValue valueWithCGPoint:[self convertPoint:self.goodsTitleLab.center   toView:self.superview]]}];
+ 
     //判断是否选中，选中才能点击
     if (_selectState == YES)
         
-    {
-        //调用代理
+    {//调用代理
+           [[NSNotificationCenter defaultCenter]postNotificationName:LIKE_GOOD_NOTIFICATION object:nil userInfo:@{@"position" :[NSValue valueWithCGPoint:[self convertPoint:self.goodsImgV.center toView:self.superview]]}];
         [self.delegate btnClick:self andFlag:(int)sender.tag];
-        
     }
 }
 

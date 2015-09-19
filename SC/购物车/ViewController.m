@@ -43,7 +43,6 @@
     for (int i = 0; i<7; i++)
         
     {
-        
         NSMutableDictionary *infoDict = [[NSMutableDictionary alloc]init];
         
         [infoDict setValue:@"img6.png" forKey:@"imageName"];
@@ -54,7 +53,7 @@
         
         [infoDict setValue:[NSNumber numberWithBool:NO] forKey:@"selectState"];
         
-        [infoDict setValue:[NSNumber numberWithInt:1] forKey:@"goodsNum"];
+        [infoDict setValue:[NSNumber numberWithInt:0] forKey:@"goodsNum"];
         
         //封装数据模型
         
@@ -84,7 +83,7 @@
     UIView*cartView= [[UIView alloc]init];
     self.cartView=cartView;
     cartView.backgroundColor=[UIColor yellowColor];
-    cartView.frame=CGRectMake(0, 400, self.view.bounds.size.width, 50);
+    cartView.frame=CGRectMake(0, self.view.bounds.size.height-50, self.view.bounds.size.width, 50);
     [self.view addSubview:cartView];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(changePoint:) name:@"pointChang" object:nil];
   
@@ -95,19 +94,17 @@
     CGPoint lbCenter=value.CGPointValue;
     
     
-    NSLog(@"lbCenter:%f,%f",lbCenter.x,lbCenter.y);
-    
-    
-    
-    UIImageView *imageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"cm_center_discount"]];
+    //NSLog(@"lbCenter:%f,%f",lbCenter.x,lbCenter.y);
+
+    UIImageView *imageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"1"]];
 
     imageView.contentMode = UIViewContentModeScaleToFill;
 
     imageView.frame = CGRectMake(0, 0, 20, 20);
  
-   imageView.hidden = YES;
+      imageView.hidden = YES;
 
-    imageView.center = lbCenter;
+      imageView.center = lbCenter;
     
     
     CALayer*layer=[[CALayer alloc]init];
@@ -117,17 +114,11 @@
     [self.view.layer addSublayer:layer];
     
     
-    CGPoint cartViewCenter=self.cartView.center;
-         NSLog(@"cartViewCenter:%f,%f",cartViewCenter.x,cartViewCenter.y);
-    
-    
-    CGPoint  endpoint=[self.view convertPoint:cartViewCenter fromView:self.cartView];
-     NSLog(@"endpoint:%f,%f",endpoint.x,endpoint.y);
-    
-    
+    CGPoint endpoint=self.cartView.center;
+
     UIBezierPath*path=[UIBezierPath bezierPath];
-    CGPoint startPoint=[self.view convertPoint:lbCenter fromView:self.MyTableView];
-     NSLog(@"startPoint:%f,%f",startPoint.x,startPoint.y);
+    CGPoint startPoint=lbCenter;
+  
     
     
     
@@ -143,7 +134,8 @@
 
     float x = sx + (ex - sx) / 3;
 
-    float y = sy + (ey - sy) * 0.5- 400;
+    float y =sy + (ey - sy) * 0.5- 400;
+
 
     CGPoint centerPoint=CGPointMake(x, y);
 
@@ -166,7 +158,7 @@
 
     animation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseIn];
 
-    //[layer addAnimation:animation forKey:@"buy"];
+    [layer addAnimation:animation forKey:@"buy"];
 
 }
 
@@ -316,7 +308,6 @@
 -(void)selectBtnClick:(UIButton *)sender
 
 {
-    
     //判断是否选中，是改成否，否改成是，改变图片状态
     
     sender.tag = !sender.tag;
@@ -404,7 +395,7 @@
             
             GoodsInfoModel *model = _infoArr[index.row];
             
-            if (model.goodsNum > 1)
+            if (model.goodsNum > 0)
                 
             {
                 
